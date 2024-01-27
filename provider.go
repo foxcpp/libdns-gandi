@@ -11,6 +11,8 @@ import (
 
 // Provider implements the libdns interfaces for Gandi.
 type Provider struct {
+	// DEPRECATED: Use BearerToken (personal access token) instead.
+	APIToken    string `json:"api_token,omitempty"`
 	BearerToken string `json:"bearer_token,omitempty"`
 
 	domains map[string]gandiDomain

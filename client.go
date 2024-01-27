@@ -159,7 +159,11 @@ func (p *Provider) getDomain(ctx context.Context, zone string) (gandiDomain, err
 }
 
 func (p *Provider) doRequest(req *http.Request, result interface{}) (gandiStatus, error) {
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", p.BearerToken))
+	if p.BearerToken != "" {
+		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", p.BearerToken))
+	} else if p.APIToken != "" {
+		req.Header.Set("Authorization", fmt.Sprintf("Apikey %s", p.APIToken))
+	}
 	req.Header.Set("Accept", "application/json")
 
 	resp, err := http.DefaultClient.Do(req)
